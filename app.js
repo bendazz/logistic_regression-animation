@@ -361,7 +361,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // Sample params buttons removed per request; students will paste their own results.
 
   function plotCurrentDataset() {
-    const parsed = parseCsvTwoCols(datasetTA.value, { colNames: ['x','y'] });
+    const parsed = parseCsvTwoCols(datasetTA.value, { colNames: ['y','x'] });
     if (!parsed.length) return;
     const isThresholdView = viewSel && viewSel.value === 'threshold';
     const data = parsed.map(({ x, y }) => {
