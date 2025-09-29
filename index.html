@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Logistic Regression Practice</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Logistic Regression Practice (1D)</h1>
+    <p>Paste the CSV dataset (x,y) and parameter updates (a,b) to visualize and animate the sigmoid fit.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>1) Dataset (x,y) CSV</h2>
+      <div class="controls-row">
+        <button id="btn-load-sample-data">Load Sample Data</button>
+        <button id="btn-copy-sample-data" title="Copy sample data to clipboard">Copy Sample CSV</button>
+        <span class="hint">Format: two columns x,y with header optional.</span>
+      </div>
+  <textarea id="dataset-csv" rows="8" placeholder="x,y\n0.2,0\n1.3,0\n4.1,1\n7.6,1\n...\n"></textarea>
+    </section>
+
+    <section class="panel">
+      <h2>2) Parameter updates (a,b) CSV</h2>
+      <div class="controls-row">
+        <span class="hint">Paste your results here. Each row is an update: a,b (header optional).</span>
+        <label class="inline">Convention:
+          <select id="param-convention">
+            <option value="slope-intercept">a*x + b (a=slope, b=intercept)</option>
+            <option value="intercept-slope">a + b*x (a=intercept, b=slope)</option>
+          </select>
+        </label>
+      </div>
+      <textarea id="params-csv" rows="8" placeholder="a,b\n0.0,0.0\n0.2, -0.5\n0.8, 0.0\n1.2, 0.3\n..."></textarea>
+    </section>
+
+    <section class="panel">
+      <h2>3) Plot</h2>
+      <div class="controls-row">
+        <button id="btn-start">Start Animation</button>
+        <button id="btn-pause">Pause</button>
+        <button id="btn-reset">Reset</button>
+        <label class="inline">Speed: <input id="speed" type="range" min="100" max="2000" step="100" value="700" /> <span id="speed-label">700ms</span></label>
+        <label class="inline">View:
+          <select id="view-mode">
+            <option value="sigmoid">Sigmoid + classes (0/1)</option>
+            <option value="threshold">Threshold-only (points on x-axis)</option>
+          </select>
+        </label>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="chart" height="260"></canvas>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>What’s happening?</h2>
+      <ul>
+        <li>Blue points are class 0 plotted at y=0; red points are class 1 at y=1.</li>
+        <li>The grey dashed line is y = 0.5.</li>
+        <li>We animate sigmoid(x; a, b) = 1 / (1 + exp(-(a·x + b))) using your (a,b) updates.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <small>Front-end only. No frameworks. Uses Chart.js for plotting.</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
