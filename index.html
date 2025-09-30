@@ -11,7 +11,7 @@
 <body>
   <header>
     <h1>Logistic Regression Practice (1D)</h1>
-    <p>Paste the CSV dataset (x,y) and parameter updates (a,b) to visualize and animate the sigmoid fit.</p>
+  <p>Paste the CSV dataset (x,y) and parameter updates (b,a) to visualize and animate the sigmoid fit.</p>
   </header>
 
   <main>
@@ -26,9 +26,9 @@
     </section>
 
     <section class="panel">
-      <h2>2) Parameter updates (a,b) CSV</h2>
+  <h2>2) Parameter updates (b,a) CSV</h2>
       <div class="controls-row">
-        <span class="hint">Paste your results here. Each row is an update: a,b (header optional).</span>
+  <span class="hint">Paste your results here. Each row is an update: b,a (intercept first, slope second; header optional).</span>
         <label class="inline">Convention:
           <select id="param-convention">
             <option value="slope-intercept">a*x + b (a=slope, b=intercept)</option>
@@ -36,7 +36,7 @@
           </select>
         </label>
       </div>
-      <textarea id="params-csv" rows="8" placeholder="a,b\n0.0,0.0\n0.2, -0.5\n0.8, 0.0\n1.2, 0.3\n..."></textarea>
+  <textarea id="params-csv" rows="8" placeholder="b,a\n0.0,0.0\n-0.5,0.2\n0.0,0.8\n0.3,1.2\n..."></textarea>
     </section>
 
     <section class="panel">
@@ -63,7 +63,7 @@
       <ul>
         <li>Blue points are class 0 plotted at y=0; red points are class 1 at y=1.</li>
         <li>The grey dashed line is y = 0.5.</li>
-        <li>We animate sigmoid(x; a, b) = 1 / (1 + exp(-(a·x + b))) using your (a,b) updates.</li>
+  <li>We animate sigmoid(x; a, b) = 1 / (1 + exp(-(a·x + b))) using your (b,a) updates (intercept first, slope second).</li>
       </ul>
     </section>
   </main>

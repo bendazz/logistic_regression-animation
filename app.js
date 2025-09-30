@@ -361,11 +361,13 @@ window.addEventListener('DOMContentLoaded', () => {
   // Sample params buttons removed per request; students will paste their own results.
 
   function plotCurrentDataset() {
-    const parsed = parseCsvTwoCols(datasetTA.value, { colNames: ['y','x'] });
+    const parsed = parseCsvTwoCols(datasetTA.value, { colNames: ['x','y'] });
     if (!parsed.length) return;
     const isThresholdView = viewSel && viewSel.value === 'threshold';
     const data = parsed.map(({ x, y }) => {
-      const cls = Number(y) > 0 ? 1 : 0;
+      // If y is not strictly 0/1 (e.g., probabilities), binarize at 0.5
+      const yNum = Number(y);
+      const cls = Number.isFinite(yNum) && yNum >= 0.5 ? 1 : 0;
       const yPos = isThresholdView ? 0 : cls;
       return { x: Number(x), y: yPos, cls };
     });
@@ -431,13 +433,12 @@ window.addEventListener('DOMContentLoaded', () => {
   currentView = (viewSel && viewSel.value) || 'sigmoid';
 
   document.getElementById('btn-start').addEventListener('click', () => {
-    const raw = parseCsvTwoCols(paramsTA.value, { colNames: ['a','b'] });
+    const raw = parseCsvTwoCols(paramsTA.value, { colNames: ['b','a'] });
     if (!raw.length) return;
-    // Normalize to internal form sigmoid(a*x + b): a=slope, b=intercept
-    const conv = (conventionSel && conventionSel.value) || 'slope-intercept';
-    paramsSequence = raw.map(({ a, b }) => (
-      conv === 'intercept-slope' ? { a: b, b: a } : { a, b }
-    ));
+    // Normalize to internal form sigmoid(a*x + b): a=slope, b=intercept.
+    // We always expect input order to be (b, a): first column is intercept b, second is slope a.
+    // Therefore no swapping is needed regardless of the selected convention.
+    paramsSequence = raw.map(({ a, b }) => ({ a, b }));
     startAnimation();
   });
 
